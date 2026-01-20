@@ -1,0 +1,2 @@
+[2026-01-20 19:49:53][Info] Application Bootstrap Begin
+[2026-01-20 19:49:53][Info] Application Bootstrap End

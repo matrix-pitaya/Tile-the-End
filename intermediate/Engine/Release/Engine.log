@@ -1,0 +1,7 @@
+﻿  timer.cpp
+D:\TilltheEnd\Interface\include\Irenderer.h(17,39): warning C4458: “window”的声明隐藏了类成员
+  (编译源文件“source/internal/timer/timer.cpp”)
+      D:\TilltheEnd\Interface\include\Irenderer.h(23,22):
+      参见“Interface::Renderer::window”的声明
+  
+  Engine.vcxproj -> D:\TilltheEnd\library\x64\Release\Engine.lib
