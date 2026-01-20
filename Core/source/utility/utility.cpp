@@ -5,8 +5,8 @@
 
 unsigned int Core::Generator::GenerateInstanceId()
 {
-	static unsigned int instancdId = 1;
-	return instancdId++;
+	static unsigned int instanceId = 1;
+	return instanceId++;
 }
 std::string Core::Generator::GenerateInstanceUId()
 {
@@ -15,9 +15,9 @@ std::string Core::Generator::GenerateInstanceUId()
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		"abcdefghijklmnopqrstuvwxyz";
 
-	static std::random_device rd = std::random_device();
-	static std::mt19937 gen = std::mt19937(rd());
-	static std::uniform_int_distribution<> dist = std::uniform_int_distribution<>(0, sizeof(charset) - 2);
+	std::random_device rd = std::random_device();
+	std::mt19937 gen = std::mt19937(rd());
+	std::uniform_int_distribution<> dist = std::uniform_int_distribution<>(0, sizeof(charset) - 2);
 
 	std::string uid;
 	for (int i = 0; i < 16; ++i)
