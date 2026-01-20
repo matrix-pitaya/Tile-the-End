@@ -72,7 +72,7 @@ void Core::Log::LogManager::Log(LogLevel level, const std::string& message)
 	LogMessage logMessage;
 	logMessage.level = level;
 	logMessage.message = message;
-	logMessage.time = Core::Utility::Time();
+	logMessage.time = Core::Utility::Date();
 	{
 		std::lock_guard<std::mutex> lock(mutex);
 		queue.push(logMessage);

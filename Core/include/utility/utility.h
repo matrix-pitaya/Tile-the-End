@@ -10,5 +10,5 @@ namespace Core::Generator
 
 namespace Core::Utility
 {
-	std::string Time();
+	std::string Date();
 }

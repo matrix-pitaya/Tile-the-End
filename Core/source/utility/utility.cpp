@@ -31,7 +31,7 @@ std::string Core::Generator::GenerateInstanceUId()
 	return uid;
 }
 
-std::string Core::Utility::Time()
+std::string Core::Utility::Date()
 {
 	auto t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	struct tm buf;
