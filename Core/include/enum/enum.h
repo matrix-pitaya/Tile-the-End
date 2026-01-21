@@ -59,3 +59,11 @@ namespace Engine::Input
 		ESC
 	};
 }
+
+namespace Render
+{
+	enum class RenderQueue
+	{
+		A, B, C
+	};
+}

@@ -39,6 +39,9 @@
     <ClInclude Include="include\internal\timer\timer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\config.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\engine.cpp">

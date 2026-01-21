@@ -29,10 +29,7 @@ void Core::Log::LogManager::Release()
 		return;
 	}
 
-	{
-		std::lock_guard<std::mutex> lock(mutex);
-		isRunning = false;
-	}
+	isRunning = false;
 	cond.notify_one();
 	if (logThread.joinable())
 	{
@@ -48,7 +45,7 @@ void Core::Log::LogManager::Release()
 }
 void Core::Log::LogManager::LogThread()
 {
-	while (true) 
+	while (true)
 	{
 		std::unique_lock<std::mutex> lock(mutex);
 		cond.wait(lock, [this] { return !queue.empty() || !isRunning; });

@@ -7,5 +7,8 @@ namespace Interface
 	class Physics
 	{
 		DECLARE_INTERFACE(Physics)
+
+	public:
+		virtual void OnFixupdata(unsigned int times) = 0;
 	};
 }

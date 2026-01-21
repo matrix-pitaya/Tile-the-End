@@ -19,3 +19,10 @@ void ::Engine::Internal::Script::Release()
 
 	isReleased = true;
 }
+void ::Engine::Internal::Script::OnFixupdata(unsigned int times)
+{
+	while (times-- > 0)
+	{
+
+	}
+}

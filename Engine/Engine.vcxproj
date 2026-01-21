@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\config.h" />
     <ClInclude Include="include\internal\destroyer\destroyer.h" />
     <ClInclude Include="include\engine.h" />
     <ClInclude Include="include\engineAPI.h" />

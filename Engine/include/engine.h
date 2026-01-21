@@ -36,7 +36,7 @@ namespace Engine
 				Tick();
 				Fixupdata();
 				Updata();
-				CoroutineMoveNext();
+				CoroutineSchedule();
 				Lateupdata();
 				Render();
 				EndOfFrame();
@@ -157,7 +157,7 @@ namespace Engine
 		void Tick();
 		void Fixupdata();
 		void Updata();
-		void CoroutineMoveNext();
+		void CoroutineSchedule();
 		void Lateupdata();
 		void Render();
 		void EndOfFrame();

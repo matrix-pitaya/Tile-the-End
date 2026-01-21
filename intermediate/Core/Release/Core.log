@@ -1,2 +1,5 @@
-﻿  log.cpp
+﻿  event.cpp
+  eventAPI.cpp
+  log.cpp
+  logapi.cpp
   Core.vcxproj -> D:\TilltheEnd\library\x64\Release\Core.lib

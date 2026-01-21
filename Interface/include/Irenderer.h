@@ -12,6 +12,7 @@ namespace Interface
 
 	public:
 		virtual bool Initialize() = 0;
+		virtual void Release() = 0;
 		virtual void Render() = 0;
 
 		inline void Bind(Interface::Window* window)
@@ -21,5 +22,7 @@ namespace Interface
 
 	protected:
 		Interface::Window* window = nullptr;
+		bool isInitialized = false;
+		bool isReleased = false;
 	};
 }

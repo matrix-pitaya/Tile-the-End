@@ -12,5 +12,8 @@ namespace Engine::Internal
 	class Script
 	{
 		DECLARE_ENGINE_SUBSYSTEM(Script)
+
+	public:
+		void OnFixupdata(unsigned int times);
 	};
 }

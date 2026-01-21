@@ -1,4 +1,5 @@
 #include"engine.h"
+#include"config.h"
 
 IMPLEMENT_SINGLETON_CLASS(Engine, Engine);
 
@@ -31,9 +32,8 @@ bool Engine::Engine::Initialize()
 	}
 
 	renderer->Bind(window);
-	renderer->Initialize();
-
 	window->Initialize(1080, 720, "Tile the End");
+	renderer->Initialize();
 
 	isInitialized = true;
 	return true;
@@ -55,15 +55,22 @@ void Engine::Engine::Tick()
 void Engine::Engine::Fixupdata()
 {
 	static float passTime = 0;
+	unsigned int times = 0;
 	passTime += time.delta;
-	while (passTime >= time.fixdelta)
+	while (passTime >= time.fixdelta && times <= ::Engine::Config::MaxFixupdataExecuteTimes)
 	{
-		//固定帧率
-
+		times++;
 		passTime -= time.fixdelta;
 	}
+
+	//固定帧率
+	if (times > 0)
+	{
+		physics->OnFixupdata(times);
+		script.OnFixupdata(times);
+	}
 }
-void Engine::Engine::CoroutineMoveNext()
+void Engine::Engine::CoroutineSchedule()
 {
 
 }

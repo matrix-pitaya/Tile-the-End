@@ -7,14 +7,14 @@ D:\TilltheEnd\Window\source\opengl\window.cpp(10,54): warning C4458: “height�
       D:\TilltheEnd\Window\include\opengl\window.h(41,7):
       参见“Window::OpenGLWindow::height”的声明
   
-D:\TilltheEnd\Window\source\opengl\window.cpp(150,42): warning C4458: “width”的声明隐藏了类成员
+D:\TilltheEnd\Window\source\opengl\window.cpp(131,42): warning C4458: “width”的声明隐藏了类成员
       D:\TilltheEnd\Window\include\opengl\window.h(40,7):
       参见“Window::OpenGLWindow::width”的声明
   
-D:\TilltheEnd\Window\source\opengl\window.cpp(150,53): warning C4458: “height”的声明隐藏了类成员
+D:\TilltheEnd\Window\source\opengl\window.cpp(131,53): warning C4458: “height”的声明隐藏了类成员
       D:\TilltheEnd\Window\include\opengl\window.h(41,7):
       参见“Window::OpenGLWindow::height”的声明
   
-D:\TilltheEnd\Window\source\opengl\window.cpp(172,64): warning C4100: 'glfwWindow': 未引用的参数
-D:\TilltheEnd\Window\source\opengl\window.cpp(178,60): warning C4100: 'glfwWindow': 未引用的参数
+D:\TilltheEnd\Window\source\opengl\window.cpp(153,64): warning C4100: 'glfwWindow': 未引用的参数
+D:\TilltheEnd\Window\source\opengl\window.cpp(159,60): warning C4100: 'glfwWindow': 未引用的参数
   Window.vcxproj -> D:\TilltheEnd\library\x64\Release\Window.lib

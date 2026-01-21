@@ -26,7 +26,7 @@ bool Window::OpenGLWindow::Initialize(int width, int height, const char* title)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);	//关闭垂直同步 渲染线程帧率由主线程控制
 
 	//创建窗口
 	window = glfwCreateWindow(width, height, title, NULL, NULL);
@@ -36,8 +36,8 @@ bool Window::OpenGLWindow::Initialize(int width, int height, const char* title)
 		glfwTerminate();//卸载库
 		return false;
 	}
+	glfwMakeContextCurrent(nullptr);
 	glfwSetWindowUserPointer(window, this);
-	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, FramebufferResetSizeCallback);
 	glfwSetCursorPosCallback(window, MouseCursorMoveCallback);
 	glfwSetScrollCallback(window, MouseScrollCallback);
@@ -53,25 +53,6 @@ bool Window::OpenGLWindow::Initialize(int width, int height, const char* title)
 	glfwSetWindowIcon(window, 1, &icon);
 	stbi_image_free(pixels);
 	*/
-
-	//初始化GLEW
-	if (glewInit() != GLEW_OK)
-	{
-		glfwDestroyWindow(window); //销毁窗口
-		glfwTerminate(); //卸载GLFW库
-		return false;
-	}
-
-	glEnable(GL_DEPTH_TEST);	//开启深度测试
-	glDepthFunc(GL_LEQUAL);
-	glDepthMask(GL_TRUE);
-	glEnable(GL_CULL_FACE);		//开启面剔除
-	glEnable(GL_STENCIL_TEST);	//开启模板测试
-	glStencilFunc(GL_ALWAYS, 1, 0xFF);			//设置总是通过模板测试
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);	//设置更新模板缓冲区方式
-	glStencilMask(0xFF);						//设置允许写入模板缓冲区
-	glEnable(GL_MULTISAMPLE);					//启用多重采样抗锯齿
-	glEnable(GL_FRAMEBUFFER_SRGB);				//开启SRGB帧缓冲区进行Gamma矫正
 
 	this->width = width;
 	this->height = height;

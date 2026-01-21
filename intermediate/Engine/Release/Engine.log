@@ -1,7 +1,47 @@
-﻿  timer.cpp
-D:\TilltheEnd\Interface\include\Irenderer.h(17,39): warning C4458: “window”的声明隐藏了类成员
-  (编译源文件“source/internal/timer/timer.cpp”)
-      D:\TilltheEnd\Interface\include\Irenderer.h(23,22):
+﻿  engine.cpp
+D:\TilltheEnd\Interface\include\Irenderer.h(18,39): warning C4458: “window”的声明隐藏了类成员
+  (编译源文件“source/engine.cpp”)
+      D:\TilltheEnd\Interface\include\Irenderer.h(24,22):
       参见“Interface::Renderer::window”的声明
+  
+D:\TilltheEnd\Engine\include\engine.h(50,37): warning C4458: “game”的声明隐藏了类成员
+  (编译源文件“source/engine.cpp”)
+      D:\TilltheEnd\Engine\include\engine.h(167,20):
+      参见“Engine::Engine::game”的声明
+  
+D:\TilltheEnd\Engine\include\engine.h(50,64): warning C4458: “renderer”的声明隐藏了类成员
+  (编译源文件“source/engine.cpp”)
+      D:\TilltheEnd\Engine\include\engine.h(168,24):
+      参见“Engine::Engine::renderer”的声明
+  
+D:\TilltheEnd\Engine\include\engine.h(50,94): warning C4458: “physics”的声明隐藏了类成员
+  (编译源文件“source/engine.cpp”)
+      D:\TilltheEnd\Engine\include\engine.h(169,23):
+      参见“Engine::Engine::physics”的声明
+  
+D:\TilltheEnd\Engine\include\engine.h(51,23): warning C4458: “window”的声明隐藏了类成员
+  (编译源文件“source/engine.cpp”)
+      D:\TilltheEnd\Engine\include\engine.h(170,22):
+      参见“Engine::Engine::window”的声明
+  
+D:\TilltheEnd\Engine\include\engine.h(51,50): warning C4458: “camera”的声明隐藏了类成员
+  (编译源文件“source/engine.cpp”)
+      D:\TilltheEnd\Engine\include\engine.h(171,22):
+      参见“Engine::Engine::camera”的声明
+  
+D:\TilltheEnd\Core\include\objectpool\objectpool.h(17,22): warning C4018: “<”: 有符号/无符号不匹配
+  (编译源文件“source/engine.cpp”)
+      D:\TilltheEnd\Core\include\objectpool\objectpool.h(17,22):
+      模板实例化上下文(最早的实例化上下文)为
+          D:\TilltheEnd\Engine\include\internal\timer\timer.h(100,26):
+          查看对正在编译的 类 模板 实例化“Core::ObjectPool<Engine::Internal::Timer::Task>”的引用
+          D:\TilltheEnd\Core\include\objectpool\objectpool.h(14,3):
+          在编译 类 模板 成员函数“Core::ObjectPool<Engine::Internal::Timer::Task>::ObjectPool(std::function<void (T *)>,std::function<void (T *)>,unsigned int)”时
+          with
+          [
+              T=Engine::Internal::Timer::Task
+          ]
+              D:\TilltheEnd\Engine\include\internal\timer\timer.h(100,59):
+              请参阅 "Engine::Internal::Timer::Timer" 中对 "Core::ObjectPool<Engine::Internal::Timer::Task>::ObjectPool" 的第一个引用
   
   Engine.vcxproj -> D:\TilltheEnd\library\x64\Release\Engine.lib
