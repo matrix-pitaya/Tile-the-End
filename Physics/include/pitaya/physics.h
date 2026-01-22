@@ -31,14 +31,15 @@ namespace Physics
 		PitayaPhysics() = default;
 		~PitayaPhysics() { Release(); }
 
-		bool Initialize();
-		void Release();
+		bool Initialize() override;
+		void Release() override;
 
 		//唤醒物理线程
 		void OnFixupdata(unsigned int times) override;
 
 	private:
 #pragma region PhysicsThreadFunction
+		bool InitPhysicsThread();
 		void PhysicsThread();
 		void Simulate();
 		void SwapBufferIfReady();

@@ -18,7 +18,6 @@ bool Renderer::OpenGLRenderer::Initialize()
 		return false;
 	}
 
-	isRunning = true;
 	renderThread = std::thread(&::Renderer::OpenGLRenderer::RenderThread, this);
 
 	isInitialized = true;
@@ -71,6 +70,8 @@ bool Renderer::OpenGLRenderer::InitOpenGLContext()
 	glStencilMask(0xFF);						//设置允许写入模板缓冲区
 	glEnable(GL_MULTISAMPLE);					//启用多重采样抗锯齿
 	glEnable(GL_FRAMEBUFFER_SRGB);				//开启SRGB帧缓冲区进行Gamma矫正
+
+	isRunning = true;
 	return true;
 }
 void Renderer::OpenGLRenderer::ProcessDrawcallCmd()
@@ -106,13 +107,21 @@ void Renderer::OpenGLRenderer::RenderThread()
 
 void Renderer::OpenGLRenderer::Render()
 {
-	//准备drawcall命令
-	mutex.lock();
-	BeginFrame();
-	DrawFrame();	
-	EndFrame();
-	std::sort(queue.begin(), queue.end(), [](const DrawcallCmd& a, const DrawcallCmd& b) { return a.renderQueue < b.renderQueue; });	//根据渲染队列进行排序
-	mutex.unlock();
+	if (!isRunning)
+	{
+		return;
+	}
+
+	{
+		//准备drawcall命令
+		std::lock_guard<std::mutex> lock(mutex);
+		BeginFrame();
+		DrawFrame();
+		EndFrame();
+
+		//根据渲染队列进行排序
+		std::sort(queue.begin(), queue.end(), [](const DrawcallCmd& a, const DrawcallCmd& b) { return a.renderQueue < b.renderQueue; });
+	}
 
 	//唤醒渲染线程
 	cond.notify_one();

@@ -1,4 +1,5 @@
 #include"pitaya/physics.h"
+#include"log/logapi.h"
 
 bool Physics::PitayaPhysics::Initialize()
 {
@@ -30,6 +31,11 @@ void Physics::PitayaPhysics::Release()
 }
 void Physics::PitayaPhysics::OnFixupdata(unsigned int times)
 {
+	if (!isRunning)
+	{
+		return;
+	}
+
 	this->times = times;
 	//唤醒物理线程
 	cond.notify_one();
@@ -38,8 +44,20 @@ void Physics::PitayaPhysics::OnFixupdata(unsigned int times)
 	//插值写回执行结果
 	InterpolateAndWriteBack();
 }
+bool Physics::PitayaPhysics::InitPhysicsThread()
+{
+	isRunning = true;
+	return true;
+}
 void Physics::PitayaPhysics::PhysicsThread()
 {
+	if (!InitPhysicsThread())
+	{
+		Core::Log::Log(Core::Log::LogLevel::Error, "Init Physics Thread Fail!");
+		throw std::runtime_error("Init Physics Thread Fail!");
+		return;
+	}
+
 	while (true)
 	{
 		std::unique_lock<std::mutex> lock(mutex);

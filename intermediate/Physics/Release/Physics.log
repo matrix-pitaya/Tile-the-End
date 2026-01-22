@@ -1,6 +1,6 @@
 ﻿  physics.cpp
-D:\TilltheEnd\Physics\source\pitaya\physics.cpp(31,55): warning C4458: “times”的声明隐藏了类成员
-      D:\TilltheEnd\Physics\include\pitaya\physics.h(56,29):
+D:\TilltheEnd\Physics\source\pitaya\physics.cpp(32,55): warning C4458: “times”的声明隐藏了类成员
+      D:\TilltheEnd\Physics\include\pitaya\physics.h(57,29):
       参见“Physics::PitayaPhysics::times”的声明
   
   Physics.vcxproj -> D:\TilltheEnd\library\x64\Release\Physics.lib

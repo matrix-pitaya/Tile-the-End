@@ -31,9 +31,11 @@ bool Engine::Engine::Initialize()
 		throw std::runtime_error("Engine camera module missing!");
 	}
 
+	physics->Initialize();
 	renderer->Bind(window);
 	window->Initialize(1080, 720, "Tile the End");
 	renderer->Initialize();
+	
 
 	isInitialized = true;
 	return true;
