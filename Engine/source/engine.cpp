@@ -103,5 +103,8 @@ void Engine::Engine::Release()
 		return;
 	}
 
+	delete physics;
+	delete renderer;
+
 	isReleased = true;
 }

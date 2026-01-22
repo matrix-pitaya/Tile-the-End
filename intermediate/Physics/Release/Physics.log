@@ -1,8 +1,8 @@
 ﻿  physics.cpp
-D:\TilltheEnd\Physics\include\pitaya\physics.h(39,24): warning C4189: “cmd”: 局部变量已初始化但不引用
+D:\TilltheEnd\Physics\include\pitaya\physics.h(40,24): warning C4189: “cmd”: 局部变量已初始化但不引用
   (编译源文件“source/pitaya/physics.cpp”)
   
-D:\TilltheEnd\Physics\source\pitaya\physics.cpp(32,55): warning C4458: “times”的声明隐藏了类成员
+D:\TilltheEnd\Physics\source\pitaya\physics.cpp(29,55): warning C4458: “times”的声明隐藏了类成员
       D:\TilltheEnd\Physics\include\pitaya\physics.h(85,29):
       参见“Physics::PitayaPhysics::times”的声明
   

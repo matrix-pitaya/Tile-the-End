@@ -32,6 +32,7 @@ namespace Core::Log
 			LogLevel level;
 			std::string time;
 			std::string message;
+			std::string thread;
 		};
 
 	public:

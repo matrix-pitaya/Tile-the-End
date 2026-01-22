@@ -26,7 +26,7 @@ namespace Engine::Timer
 
 		const unsigned int id;
 
-		struct HashTaskToken
+		struct Hash
 		{
 			size_t operator()(const ::Engine::Timer::TaskToken& taskToken) const noexcept
 			{
@@ -96,7 +96,7 @@ namespace Engine::Internal
 
 	private:
 		std::priority_queue<Task*, std::vector<Task*>, Task::CompareHandler> taskQueue;
-		std::unordered_map<::Engine::Timer::TaskToken, Task*, ::Engine::Timer::TaskToken::HashTaskToken> taskMap;
+		std::unordered_map<::Engine::Timer::TaskToken, Task*, ::Engine::Timer::TaskToken::Hash> taskMap;
 		Core::ObjectPool<Task> taskPool = Core::ObjectPool<Task>([](Task* task) { task->Reset(); }, [](Task* task) { task->Reset(); }, 10);
 	};
 }

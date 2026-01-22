@@ -160,6 +160,8 @@
     <ClInclude Include="include\log\log.h" />
     <ClInclude Include="include\log\logapi.h" />
     <ClInclude Include="include\objectpool\objectpool.h" />
+    <ClInclude Include="include\thread\thread.h" />
+    <ClInclude Include="include\thread\threadapi.h" />
     <ClInclude Include="include\utility\utility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +169,7 @@
     <ClCompile Include="source\event\eventAPI.cpp" />
     <ClCompile Include="source\log\log.cpp" />
     <ClCompile Include="source\log\logapi.cpp" />
+    <ClCompile Include="source\thread\thread.cpp" />
     <ClCompile Include="source\utility\utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

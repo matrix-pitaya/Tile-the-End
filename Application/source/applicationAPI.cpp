@@ -3,6 +3,7 @@
 #include"log/logapi.h"
 #include"console/console.h"
 #include"utility/utility.h"
+#include"thread/threadapi.h"
 
 #include"tilltheend/game.h"
 #include"opengl/renderer.h"
@@ -12,6 +13,8 @@
 
 void Application::Bootstrap()
 {
+	Core::Thread::RegisterThread("Main", std::this_thread::get_id());
+
 	Core::Console::Print(Core::Color::Yellow, (Core::Utility::Date() + " Application Bootstrap Begin").c_str());
 	Core::Log::Log(Core::Log::LogLevel::Info, "Application Bootstrap Begin");
 

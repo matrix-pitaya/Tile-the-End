@@ -17,7 +17,7 @@ bool Renderer::OpenGLRenderer::Initialize()
 		return false;
 	}
 
-	renderThread = std::thread(&::Renderer::OpenGLRenderer::RenderThread, this);
+	renderThreadToken = Core::Thread::RegisterThread("Render", &::Renderer::OpenGLRenderer::RenderThread, this);
 
 	isInitialized = true;
 	return true;
@@ -31,10 +31,7 @@ void Renderer::OpenGLRenderer::Release()
 
 	isRunning = false;
 	cond.notify_one();
-	if (renderThread.joinable())
-	{
-		renderThread.join();
-	}
+	Core::Thread::UnregisterThread(renderThreadToken);
 
 	isReleased = true;
 }

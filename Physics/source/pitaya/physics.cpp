@@ -8,7 +8,7 @@ bool Physics::PitayaPhysics::Initialize()
 		return false;
 	}
 
-	physicsThread = std::thread(&PitayaPhysics::PhysicsThread, this);
+	physicsThreadToken = Core::Thread::RegisterThread("Physics", &PitayaPhysics::PhysicsThread, this);
 
 	isInitialized = true;
 	return true;
@@ -22,10 +22,7 @@ void Physics::PitayaPhysics::Release()
 
 	isRunning = false;
 	cond.notify_one();
-	if (physicsThread.joinable())
-	{
-		physicsThread.join();
-	}
+	Core::Thread::UnregisterThread(physicsThreadToken);
 
 	isReleased = true;
 }
@@ -61,7 +58,7 @@ void Physics::PitayaPhysics::PhysicsThread()
 	while (true)
 	{
 		std::unique_lock<std::mutex> lock(mutex);
-		cond.wait(lock, [this] { return physicsCmdParser.IsRemainCmd() || times > 0 || !isRunning; });
+		cond.wait(lock, [this] { return physicsCmdParser.IsRemainCmd() || times != 0 || !isRunning; });
 
 		//执行主线程写入的物理命令 调整物理世界组件数量
 		ProcessPhysicsCmd();
@@ -69,16 +66,18 @@ void Physics::PitayaPhysics::PhysicsThread()
 		//读取主线程写入的buffer重构物理世界
 		RebuildWorldFromBuffer();
 
-		while (times-- > 0)
+		while (times != 0)
 		{
 			//模拟物理世界
 			Simulate();
+
+			times--;
 		}
 
 		//写回buffer
 		RebuildWorldFromBuffer();
 
-		if (!physicsCmdParser.IsRemainCmd() && times <= 0 && !isRunning)
+		if (!physicsCmdParser.IsRemainCmd() && times == 0 && !isRunning)
 		{
 			break;
 		}

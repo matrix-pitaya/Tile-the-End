@@ -51,6 +51,12 @@
     <ClInclude Include="include\log\logapi.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\thread\thread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thread\threadapi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\event\event.cpp">
@@ -66,6 +72,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\log\logapi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\thread\thread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

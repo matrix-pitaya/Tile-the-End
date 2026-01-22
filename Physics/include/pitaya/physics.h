@@ -4,7 +4,8 @@
 
 #include"Iphysics.h"
 
-#include<thread>
+#include"thread/threadapi.h"
+
 #include<atomic>
 #include<condition_variable>
 #include<mutex>
@@ -79,12 +80,13 @@ namespace Physics
 		void InterpolateAndWriteBack();
 
 	private:
-		std::thread physicsThread;
 		std::condition_variable cond;
 		std::atomic<bool> isRunning = false;
 		std::atomic<unsigned int> times = 0;
 		std::mutex mutex;
+		Core::Thread::ThreadToken physicsThreadToken;
 		PhysicsCmdParser physicsCmdParser;
+
 
 		//Ë«»º³å
 		std::vector<PhysicsData> bufferA;

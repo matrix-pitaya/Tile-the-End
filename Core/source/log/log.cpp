@@ -1,6 +1,7 @@
 #include"log/log.h"
 
 #include"utility/utility.h"
+#include"thread/threadapi.h"
 
 IMPLEMENT_SINGLETON_CLASS(Core::Log, LogManager)
 
@@ -53,7 +54,7 @@ void Core::Log::LogManager::LogThread()
 		while (!queue.empty()) 
 		{
 			const LogMessage& logMessage = queue.front();
-			ofs << "[" << (logMessage.time) << "][" << LogLevelToString(logMessage.level) << "] "<< logMessage.message << std::endl;
+			ofs << "[" << (logMessage.time) << "][" << LogLevelToString(logMessage.level) << "][" << logMessage.thread << "]" << logMessage.message << std::endl;
 			queue.pop();
 		}
 		ofs.flush();
@@ -70,6 +71,7 @@ void Core::Log::LogManager::Log(LogLevel level, const std::string& message)
 	logMessage.level = level;
 	logMessage.message = message;
 	logMessage.time = Core::Utility::Date();
+	logMessage.thread = Core::Thread::GetThreadName(std::this_thread::get_id());
 	{
 		std::lock_guard<std::mutex> lock(mutex);
 		queue.push(logMessage);

@@ -5,7 +5,8 @@
 
 #include"Irenderer.h"
 
-#include<thread>
+#include"thread/threadapi.h"
+
 #include<atomic>
 #include<condition_variable>
 #include<mutex>
@@ -96,10 +97,10 @@ namespace Renderer
 #pragma endregion
 
 	private:
-		std::thread renderThread;
 		std::condition_variable cond;
 		std::atomic<bool> isRunning = false;
 		std::mutex mutex;
+		Core::Thread::ThreadToken renderThreadToken;
 		DrawcallCmdParser renderCmd;
 
 		GLFWwindow* openGLWindow = nullptr;
