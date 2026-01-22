@@ -61,7 +61,7 @@ void Physics::PitayaPhysics::PhysicsThread()
 	while (true)
 	{
 		std::unique_lock<std::mutex> lock(mutex);
-		cond.wait(lock, [this] { return !queue.empty() || times > 0 || !isRunning; });
+		cond.wait(lock, [this] { return physicsCmdParser.IsRemainCmd() || times > 0 || !isRunning; });
 
 		//执行主线程写入的物理命令 调整物理世界组件数量
 		ProcessPhysicsCmd();
@@ -78,7 +78,7 @@ void Physics::PitayaPhysics::PhysicsThread()
 		//写回buffer
 		RebuildWorldFromBuffer();
 
-		if (queue.empty() && times <= 0 && !isRunning)
+		if (!physicsCmdParser.IsRemainCmd() && times <= 0 && !isRunning)
 		{
 			break;
 		}
@@ -102,7 +102,7 @@ void Physics::PitayaPhysics::WriteBackResultsToBuffer()
 }
 void Physics::PitayaPhysics::ProcessPhysicsCmd()
 {
-
+	physicsCmdParser.ParseCmd();
 }
 void Physics::PitayaPhysics::InterpolateAndWriteBack()
 {

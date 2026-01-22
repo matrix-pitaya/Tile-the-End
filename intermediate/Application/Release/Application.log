@@ -4,11 +4,14 @@ D:\TilltheEnd\Interface\include\Irenderer.h(18,39): warning C4458: “window”�
       D:\TilltheEnd\Interface\include\Irenderer.h(24,22):
       参见“Interface::Renderer::window”的声明
   
+D:\TilltheEnd\Physics\include\pitaya\physics.h(39,24): warning C4189: “cmd”: 局部变量已初始化但不引用
+  (编译源文件“source/applicationAPI.cpp”)
+  
 MSVCRT.lib(initializers.obj) : warning LNK4098: 默认库“libcmt.lib”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
   正在生成代码
-  28 of 2413 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
-    11 functions were new in current compilation
-    63 functions had inline decision re-evaluated but remain unchanged
+  150 of 2423 functions ( 6.2%) were compiled, the rest were copied from previous compilation.
+    127 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
 glew32s.lib(glew.obj) : warning LNK4099: 未找到 PDB“vc120.pdb”(使用“glew32s.lib(glew.obj)”或在“D:\TilltheEnd\exe\x64\Release\vc120.pdb”中寻找)；正在链接对象，如同没有调试信息一样
   Application.vcxproj -> D:\TilltheEnd\exe\x64\Release\TilltheEnd.exe

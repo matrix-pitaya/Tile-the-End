@@ -18,10 +18,37 @@ namespace Physics
 		DELETE_COPY_AND_MOVE(PitayaPhysics)
 
 	private:
-		struct PhysicsCmd
+		class PhysicsCmdParser
 		{
+			DELETE_COPY_AND_MOVE(PhysicsCmdParser)
 
+		private:
+			struct PhysicsCmd
+			{
+
+			};
+
+		public:
+			PhysicsCmdParser() = default;
+			~PhysicsCmdParser() = default;
+
+			inline void ParseCmd()
+			{
+				while (!queue.empty())
+				{
+					const PhysicsCmd& cmd = queue.front();
+					queue.pop();
+				}
+			}
+			inline bool IsRemainCmd()
+			{
+				return !queue.empty();
+			}
+
+		private:
+			std::queue<PhysicsCmd> queue;
 		};
+		
 		struct PhysicsData
 		{
 
@@ -37,8 +64,8 @@ namespace Physics
 		//唤醒物理线程
 		void OnFixupdata(unsigned int times) override;
 
-	private:
 #pragma region PhysicsThreadFunction
+	private:
 		bool InitPhysicsThread();
 		void PhysicsThread();
 		void Simulate();
@@ -48,6 +75,7 @@ namespace Physics
 		void ProcessPhysicsCmd();
 #pragma endregion
 
+	private:
 		void InterpolateAndWriteBack();
 
 	private:
@@ -56,7 +84,7 @@ namespace Physics
 		std::atomic<bool> isRunning = false;
 		std::atomic<unsigned int> times = 0;
 		std::mutex mutex;
-		std::queue<PhysicsCmd> queue;
+		PhysicsCmdParser physicsCmdParser;
 
 		//双缓冲
 		std::vector<PhysicsData> bufferA;

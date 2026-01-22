@@ -76,7 +76,7 @@ bool Renderer::OpenGLRenderer::InitOpenGLContext()
 void Renderer::OpenGLRenderer::ProcessRenderCmd()
 {
 	Core::Log::Log(Core::Log::LogLevel::Debug, "‰÷»æœﬂ≥Ã÷¥––drawcallcmd" + std::to_string(renderCmd.DrawcallCmdCount()));
-	renderCmd.ProcessDrawcallCmd();
+	renderCmd.ParseCmd();
 }
 void Renderer::OpenGLRenderer::RenderThread()
 {
@@ -88,10 +88,10 @@ void Renderer::OpenGLRenderer::RenderThread()
 	while (true)
 	{
 		std::unique_lock<std::mutex> lock(mutex);
-		cond.wait(lock, [this] { return !renderCmd.IsEmpty() || !isRunning; });
+		cond.wait(lock, [this] { return renderCmd.IsRemainCmd() || !isRunning; });
 
 		ProcessRenderCmd();
-		if (renderCmd.IsEmpty() && !isRunning)
+		if (!renderCmd.IsRemainCmd() && !isRunning)
 		{
 			break;
 		}

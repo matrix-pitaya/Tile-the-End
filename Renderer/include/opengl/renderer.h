@@ -39,12 +39,9 @@ namespace Renderer
 
 		public:
 			DrawcallCmdParser() = default;
-			~DrawcallCmdParser()
-			{
-				drawcallCmds.clear();
-			}
+			~DrawcallCmdParser() = default;
 
-			inline void ProcessDrawcallCmd()
+			inline void ParseCmd()
 			{
 				//根据渲染队列进行排序
 				std::sort(drawcallCmds.begin(), drawcallCmds.end(), [](const DrawcallCmd& a, const DrawcallCmd& b) { return a.renderQueue < b.renderQueue; });
@@ -65,13 +62,9 @@ namespace Renderer
 			{
 				drawcallCmds.emplace_back(renderQueue, std::move(drawcall));
 			}
-			inline void AddDrawcallCmd(DrawcallCmd drawcallCmd)
+			inline bool IsRemainCmd()
 			{
-				drawcallCmds.push_back(drawcallCmd);
-			}
-			inline bool IsEmpty()
-			{
-				return drawcallCmds.empty();
+				return !drawcallCmds.empty();
 			}
 			inline size_t DrawcallCmdCount()
 			{
