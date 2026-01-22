@@ -4,5 +4,5 @@ D:\TilltheEnd\Interface\include\Irenderer.h(18,39): warning C4458: “window”�
       D:\TilltheEnd\Interface\include\Irenderer.h(24,22):
       参见“Interface::Renderer::window”的声明
   
-D:\TilltheEnd\Renderer\source\opengl\renderer.cpp(17,21): warning C4834: 放弃具有 [[nodiscard]] 属性的函数的返回值
+D:\TilltheEnd\Renderer\source\opengl\renderer.cpp(16,21): warning C4834: 放弃具有 [[nodiscard]] 属性的函数的返回值
   Renderer.vcxproj -> D:\TilltheEnd\library\x64\Release\Renderer.lib

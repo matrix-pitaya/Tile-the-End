@@ -11,6 +11,7 @@
 #include<mutex>
 #include<vector>
 #include<functional>
+#include<algorithm>
 
 #include<GL/glew.h>
 #include<GLFW/glfw3.h>
@@ -22,13 +23,63 @@ namespace Renderer
 		DELETE_COPY_AND_MOVE(OpenGLRenderer)
 
 	private:
-		struct DrawcallCmd
+		class DrawcallCmdParser
 		{
-			DrawcallCmd(Render::RenderQueue renderQueue, std::function<void()> drawcall)
-				:renderQueue(renderQueue), drawcall(std::move(drawcall)) {}
+			DELETE_COPY_AND_MOVE(DrawcallCmdParser)
 
-			Render::RenderQueue renderQueue;
-			std::function<void()> drawcall;
+		private:
+			struct DrawcallCmd
+			{
+				DrawcallCmd(Render::RenderQueue renderQueue, std::function<void()> drawcall)
+					:renderQueue(renderQueue), drawcall(std::move(drawcall)) { }
+
+				Render::RenderQueue renderQueue;
+				std::function<void()> drawcall;
+			};
+
+		public:
+			DrawcallCmdParser() = default;
+			~DrawcallCmdParser()
+			{
+				drawcallCmds.clear();
+			}
+
+			inline void ProcessDrawcallCmd()
+			{
+				//根据渲染队列进行排序
+				std::sort(drawcallCmds.begin(), drawcallCmds.end(), [](const DrawcallCmd& a, const DrawcallCmd& b) { return a.renderQueue < b.renderQueue; });
+				for (auto& drawcallCmd : drawcallCmds)
+				{
+					if (drawcallCmd.drawcall)
+					{
+						drawcallCmd.drawcall();
+					}
+				}
+				drawcallCmds.clear();
+			}
+			inline void ClearDrawcallCmd()
+			{
+				drawcallCmds.clear();
+			}
+			inline void AddDrawcallCmd(Render::RenderQueue renderQueue, std::function<void()> drawcall)
+			{
+				drawcallCmds.emplace_back(renderQueue, std::move(drawcall));
+			}
+			inline void AddDrawcallCmd(DrawcallCmd drawcallCmd)
+			{
+				drawcallCmds.push_back(drawcallCmd);
+			}
+			inline bool IsEmpty()
+			{
+				return drawcallCmds.empty();
+			}
+			inline size_t DrawcallCmdCount()
+			{
+				return drawcallCmds.size();
+			}
+
+		private:
+			std::vector<DrawcallCmd> drawcallCmds;
 		};
 
 	public:
@@ -48,7 +99,7 @@ namespace Renderer
 	private:
 		void RenderThread();
 		bool InitOpenGLContext();
-		void ProcessDrawcallCmd();
+		void ProcessRenderCmd();
 #pragma endregion
 
 	private:
@@ -56,7 +107,7 @@ namespace Renderer
 		std::condition_variable cond;
 		std::atomic<bool> isRunning = false;
 		std::mutex mutex;
-		std::vector<DrawcallCmd> queue;
+		DrawcallCmdParser renderCmd;
 
 		GLFWwindow* openGLWindow = nullptr;
 	};

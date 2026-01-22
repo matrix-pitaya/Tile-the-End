@@ -26,7 +26,7 @@ bool Window::OpenGLWindow::Initialize(int width, int height, const char* title)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwSwapInterval(0);	//关闭垂直同步 渲染线程帧率由主线程控制
+	glfwSwapInterval(1);
 
 	//创建窗口
 	window = glfwCreateWindow(width, height, title, NULL, NULL);

@@ -2,7 +2,6 @@
 #include"log/logapi.h"
 
 #include<stdexcept>
-#include<algorithm>
 #include<string>
 
 bool Renderer::OpenGLRenderer::Initialize()
@@ -74,16 +73,10 @@ bool Renderer::OpenGLRenderer::InitOpenGLContext()
 	isRunning = true;
 	return true;
 }
-void Renderer::OpenGLRenderer::ProcessDrawcallCmd()
+void Renderer::OpenGLRenderer::ProcessRenderCmd()
 {
-	for (auto& drawcallCmd : queue)
-	{
-		if (drawcallCmd.drawcall)
-		{
-			drawcallCmd.drawcall();
-		}
-	}
-	queue.clear();
+	Core::Log::Log(Core::Log::LogLevel::Debug, "渲染线程执行drawcallcmd" + std::to_string(renderCmd.DrawcallCmdCount()));
+	renderCmd.ProcessDrawcallCmd();
 }
 void Renderer::OpenGLRenderer::RenderThread()
 {
@@ -95,10 +88,10 @@ void Renderer::OpenGLRenderer::RenderThread()
 	while (true)
 	{
 		std::unique_lock<std::mutex> lock(mutex);
-		cond.wait(lock, [this] { return !queue.empty() || !isRunning; });
+		cond.wait(lock, [this] { return !renderCmd.IsEmpty() || !isRunning; });
 
-		ProcessDrawcallCmd();
-		if (queue.empty() && !isRunning)
+		ProcessRenderCmd();
+		if (renderCmd.IsEmpty() && !isRunning)
 		{
 			break;
 		}
@@ -115,13 +108,13 @@ void Renderer::OpenGLRenderer::Render()
 	{
 		//准备drawcall命令
 		std::lock_guard<std::mutex> lock(mutex);
+		renderCmd.ClearDrawcallCmd();
 		BeginFrame();
 		DrawFrame();
 		EndFrame();
-
-		//根据渲染队列进行排序
-		std::sort(queue.begin(), queue.end(), [](const DrawcallCmd& a, const DrawcallCmd& b) { return a.renderQueue < b.renderQueue; });
 	}
+
+	Core::Log::Log(Core::Log::LogLevel::Debug, "主线程提交渲染执行");
 
 	//唤醒渲染线程
 	cond.notify_one();
@@ -132,7 +125,7 @@ void Renderer::OpenGLRenderer::BeginFrame()
 
 	//TODO 切换到窗口帧帧率缓冲区
 	//准备渲染 清空窗口帧缓冲区
-	queue.push_back(DrawcallCmd(Render::RenderQueue::A, [this]() {window->ClearFrameBuffer();}));
+	renderCmd.AddDrawcallCmd(Render::RenderQueue::A, [this]() {window->ClearFrameBuffer(); });
 }
 void Renderer::OpenGLRenderer::DrawFrame()
 {
@@ -143,5 +136,5 @@ void Renderer::OpenGLRenderer::EndFrame()
 	//TOOD 场景后处理
 
 	//TODO UI绘制
-	queue.push_back(DrawcallCmd(Render::RenderQueue::C, [this]() {window->SwapBuffer(); }));
+	renderCmd.AddDrawcallCmd(Render::RenderQueue::C, [this]() {window->SwapBuffer(); });
 }
